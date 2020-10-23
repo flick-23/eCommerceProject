@@ -2,17 +2,18 @@ import java.util.Scanner;
 
 //Maincourse Class
 class mainCourse{
-    int dishNo,dishQuantity=1,amount;
-    String typeofCourse,choice="Y";
-    //Method for ordering maincourse
-    int order(int totalamount){
-        Scanner in=new Scanner(System.in);
+    Scanner in=new Scanner(System.in);
+    int dishNo,dishQuantity=1,amount=0,choice;
+
+    void courseDisplay(){
         System.out.println("\t\t\t\t\t**\"WELCOME TO MAIN COURSE\"**");
-        System.out.println("\t\t\tENTER 'V' FOR INDIAN VEG DISHES, 'NV' FOR INDIAN NON VEG DISHES");;   
-        typeofCourse=in.nextLine();
-        //Veg maincourse
-        if(typeofCourse.equalsIgnoreCase("V")){
-            System.out.println("\t\tHere is our Indian Vegetarian Main course menu:");
+        System.out.println("Choose your item from the below menu-");
+        System.out.println("1.Vegetarian Main Course.");
+        System.out.println("2.Non Vegetarian Main Course.");
+        System.out.println("3.EXIT Main Course Menu.");
+    }
+    void vegMenu(){
+        System.out.println("\t\tHere is our Indian Vegetarian Main course menu:");
             System.out.println("\nINDIAN VEG DISHES:\t\t\t\t\tRs.");
             System.out.println("1. SHAHI PANEER\t\t\t\t\t\t200");
             System.out.println("2. NAVRATAN KORMA\t\t\t\t\t180");
@@ -26,35 +27,10 @@ class mainCourse{
             System.out.println("10.KASHMIRI PULAO\t\t\t\t\t190");
             System.out.println("11.BUTTER NAAN\t\t\t\t\t\t60");
             System.out.println("12.STUFFED KULCHA\t\t\t\t\t165");
-            while(choice.equalsIgnoreCase("Y")){
-                System.out.println("\nCHOOSE YOUR MAIN VEG COURSE FROM THE LIST BY ENTERING NO. ");
-                dishNo=in.nextInt();
-                System.out.println("\nEnter the quantity of the dish you selected:");
-                dishQuantity=in.nextInt();
-                if(dishNo==1)
-                    amount=dishQuantity*200;
-                if(dishNo==2)
-                    amount=dishQuantity*180;
-                if(dishNo==3||dishNo==10)
-                    amount=dishQuantity*190;
-                if(dishNo==4||dishNo==7)
-                    amount=dishQuantity*170;
-                if(dishNo==5||dishNo==8||dishNo==12)
-                    amount=dishQuantity*165;
-                if(dishNo==6)
-                    amount=dishQuantity*160;
-                if(dishNo==9)
-                    amount=dishQuantity*175;
-                if(dishNo==11)
-                    amount=dishQuantity*160;
-                totalamount+=amount;
-                System.out.println("DO YOU WANT TO PLACE MORE ORDER ? ENTER Y/N");
-                choice=in.next();
-            }
-        }
-        //Nonveg maincourse
-        if(typeofCourse.equalsIgnoreCase("NV")){
-            System.out.println("\t\tHere is our Indian Vegetarian Main course menu:");
+            System.out.println("0.EXIT Vegetarian Main course menu");
+    }
+    void nvegMenu(){
+        System.out.println("\t\tHere is our Indian Non-Vegetarian Main course menu:");
             System.out.println("\nINDIAN NON VEG DISHES:\t\t\t\t\tRs.");
             System.out.println("1.CHICKEN TIKKA MASALA\t\t\t\t\t210");
             System.out.println("2.CHICKEN TIKKA LABADAR\t\t\t\t\t230");
@@ -68,37 +44,61 @@ class mainCourse{
             System.out.println("10.PRON MALAI CURRY\t\t\t\t\t260");
             System.out.println("11.FISH SARSOWALA\t\t\t\t\t220");
             System.out.println("12.FISH DHANIAWALA\t\t\t\t\t210");
-             while(choice.equalsIgnoreCase("Y")){
-                System.out.println("\nCHOOSE YOUR MAIN VEG COURSE FROM THE LIST BY ENTERING NO. ");
-                dishNo=in.nextInt();
-                System.out.println("\nEnter the quantity of the dish you selected:");
-                dishQuantity=in.nextInt();
-                if(dishNo==1||dishNo==12)
-                    amount=dishQuantity*210;
-                if(dishNo==2)
-                   amount=dishQuantity*230;
-                if(dishNo==3||dishNo==9)
-                    amount=dishQuantity*200;
-                if(dishNo==4)
-                    amount=dishQuantity*235;
-                if(dishNo==5||dishNo==6)
-                    amount=dishQuantity*250;
-                if(dishNo==7)
-                    amount=dishQuantity*240;
-                if(dishNo==8)
-                    amount=dishQuantity*215;
-                if(dishNo==10)
-                    amount=dishQuantity*260;
-                if(dishNo==11)
-                    amount=dishQuantity*220;
-                totalamount+=amount;
-                System.out.println("DO YOU WANT TO PLACE MORE ORDER ? ENTER Y/N");
-                choice=in.next();
-             }
-        }
-        return totalamount;
+            System.out.println("0.EXIT Non-Vegetarian Main course menu");
+    }
+    int calculate(int quantity,int price[],int item){
+        System.out.println("Do you want to order more ?");
+        System.out.println("Enter the item number to order OR Press 0 to EXIT the menu!");
+        int amt = quantity*price[item];
+        return amt;
+    }
+    //Method for ordering maincourse
+    int order(int totalamount){
+        courseDisplay();
+        do{
+             choice = in.nextInt();
+             switch(choice)
+             {
+                 case 1:
+                      vegMenu();
+                     do{
+                         int vprice[]={200,180,190,170,165,160,170,165,175,190,60,165};
+                         System.out.println("Enter the item number you would like order: ");
+                         dishNo = in.nextInt();
+                         if(dishNo==0)
+                             break;
+                         System.out.println("Enter the quantity of the item");
+                         dishQuantity = in.nextInt();
+                         amount += calculate(dishQuantity,vprice,dishNo-1);
+                     }while(dishNo!=0);
+                     courseDisplay();
+                 break;
+ 
+                 case 2:
+                     nvegMenu();
+                     do{
+                         int nvprice[]={210,230,200,235,250,250,240,215,200,260,220,210};    
+                         System.out.println("Enter the item number you would like order: ");
+                         dishNo = in.nextInt();
+                         if(dishNo==0)
+                             break;
+                         System.out.println("Enter the quantity of the item");
+                         dishQuantity = in.nextInt();
+                         amount += calculate(dishQuantity,nvprice,dishNo-1);
+                     }while(dishNo!=0);
+                     courseDisplay();
+                 break;
+                 case 3:
+                    System.out.println("Do checkout our Desserts & Beverages!!");
+                break;
+                default:
+                    System.out.println("INVALID INPUT!!! Kindly enter the item number only.");
+            }
+       }while(choice!=3);
+       return (amount+totalamount);
     }
 }
+
 
 public class projectmc{
     public static void main(String[] args) {
@@ -106,5 +106,6 @@ public class projectmc{
         int totalamount=0;
         mainCourse mc=new mainCourse();
         totalamount=mc.order(totalamount);
+        System.out.println(totalamount);
     }
 }
