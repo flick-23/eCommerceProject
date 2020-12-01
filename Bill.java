@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class Bill{
+class Billing{
     String validThru,fullName,bankName,cardNo,remark;
     float vat=0.18f,enteredAmount,payableAmount;
     int choice,cvv,OTP,enteredOTP;
@@ -14,6 +14,20 @@ class Bill{
         payableAmount=totalamount+totalamount*vat;
         payableAmount=Math.round(payableAmount);
     }
+
+    void details(int starters,int mainCourse,int desserts,int beverages)
+    {
+        if(starters!=0)
+            System.out.println("Total amount for STARTERS : "+starters);
+        if(mainCourse!=0)
+            System.out.println("Total amount for MAIN COURSE : "+mainCourse);
+        if(desserts!=0)
+            System.out.println("Total amount for DESSERTS : "+desserts);
+        if(beverages!=0)
+            System.out.println("Total amount for BEVERAGES : "+beverages);
+        
+    }
+
     void paymentConfimation(){
         do{
             System.out.println("Enter the amount you have to pay:");
@@ -25,8 +39,8 @@ class Bill{
         }while(enteredAmount!=(payableAmount));
     }
     void paymentoptions(){
-        System.out.println("Total amount to be paid: "+ payableAmount);
-        System.out.println("How would you like to pay-");
+        System.out.println("\nTotal amount to be paid: "+ payableAmount);
+        System.out.println("\n\nHow would you like to pay-");
         System.out.println("1.Cash on Delivery");
         System.out.println("2.Card payment.");
         System.out.println("3.Net Banking.");
@@ -75,7 +89,8 @@ class Bill{
         System.out.println("Transaction Successful.");
         System.out.println("Thank You.. Visit Again..");
     }
-    void payment(int totalamount){
+    void payment(int totalamount,int starters,int mainCourse,int desserts,int beverages){
+        details(starters, mainCourse,desserts, beverages);
         paymentDetails(totalamount);
         paymentoptions();
         choice=in.nextInt();
@@ -90,14 +105,14 @@ class Bill{
                     netBanking();
                     break;
             default: System.out.println("Invalid input! Kindly make a proper input.");
-                        payment(totalamount);            
+                        payment(totalamount,starters, mainCourse,desserts, beverages);            
         }
     }
 }
-public class projectBill {
+public class Bill {
     public static void main(String[] args) {
         int totalamount=450;
-        Bill b=new Bill();
-        b.payment(totalamount);
+        Billing b=new Billing();
+        b.payment(totalamount,10,20,30,0);
     }
 }

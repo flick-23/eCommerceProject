@@ -133,7 +133,7 @@ class Desserts{
     }
 }
 
-public class JavaProject{
+public class DESSERTS{
     public static void main(String[] args) {
         //totalamount is the amount got from Desserts!!
         int totalamount=0;

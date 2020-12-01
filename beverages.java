@@ -323,7 +323,7 @@ class Beverages {
 	
 }
 
-public class Projectmc {
+public class beverages {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

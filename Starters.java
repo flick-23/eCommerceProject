@@ -1,8 +1,7 @@
 import java.io.*;
 import java.util.*;
 import java.lang.*;
-class Starters
-{
+class Starters{
     int mainChoice;
     int veg,nonVeg,papad,soup;
     int qveg,qnonVeg,qpapad,qsoup;
