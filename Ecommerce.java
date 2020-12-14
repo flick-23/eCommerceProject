@@ -901,7 +901,7 @@ class Starters{
 }
 
 class Ecommerce{
-    public static void main(String []args)
+    public static void main(String []args)throws IOException
     {
         Scanner venki = new Scanner(System.in);
         int totalStarterAmount = 0, totalMainCouseAmount = 0, totalDessertsAmount = 0, totalBeveragesAmount = 0;
@@ -939,5 +939,8 @@ class Ecommerce{
         Payment b=new Payment();
         int totalamount = totalStarterAmount + totalMainCouseAmount+ totalDessertsAmount + totalBeveragesAmount;
         b.payment(totalamount,totalStarterAmount, totalMainCouseAmount, totalDessertsAmount, totalBeveragesAmount);
+
+        Feedback f = new Feedback();
+        f.data();
     }
 }
