@@ -327,8 +327,10 @@ class Beverages {
 }
 
 //This class displays the details of the total Bill
-class Bill extends Payment{
-     void paymentDetails(int totalamount){
+class Bill {
+    float payableAmount,vat=0.18f;
+
+    void paymentDetails(int totalamount){
         System.out.println("\t\t\t\t\t\tThanks For Ordering with us..!");
         System.out.println("Your amount: "+totalamount);
         System.out.println("GST - 18%");
@@ -336,20 +338,48 @@ class Bill extends Payment{
         payableAmount=Math.round(payableAmount);
     }
 
-    void details(int starters,int mainCourse,int desserts,int beverages)
+    void displayStartersTotal(int starters)
     {
         if(starters!=0)
             System.out.println("Total amount for STARTERS : "+starters);
+    }
+
+    void displayMainCourseTotal(int mainCourse)
+    {
         if(mainCourse!=0)
             System.out.println("Total amount for MAIN COURSE : "+mainCourse);
+    }
+
+    void displayBeveragesTotal(int desserts)
+    {
         if(desserts!=0)
             System.out.println("Total amount for DESSERTS : "+desserts);
+    }
+
+    void displayDessertsTotal(int beverages)
+    {
         if(beverages!=0)
             System.out.println("Total amount for BEVERAGES : "+beverages);
-        
     }
+    
+}
+
+//This class handles all the queries related to payments
+class Payment extends Bill{
+    String validThru,fullName,bankName,cardNo,remark;
+    float enteredAmount;
+    int choice,cvv,OTP,enteredOTP;
+    long fromAccount,toAccount;
+    double generateOTP;
+    Scanner in =new Scanner(System.in);
+   
     void payment(int totalamount,int starters,int mainCourse,int desserts,int beverages){
-        details(starters, mainCourse,desserts, beverages);
+
+        displayStartersTotal(starters);
+        displayMainCourseTotal(mainCourse);
+        displayBeveragesTotal(desserts);
+        displayDessertsTotal(beverages);
+
         paymentDetails(totalamount);
         paymentoptions();
         choice=in.nextInt();
@@ -367,18 +397,6 @@ class Bill extends Payment{
                         payment(totalamount,starters, mainCourse,desserts, beverages);            
         }
     }
-}
-
-
-//This class handles all the queries related to payments
-class Payment{
-    String validThru,fullName,bankName,cardNo,remark;
-    float vat=0.18f,enteredAmount,payableAmount;
-    int choice,cvv,OTP,enteredOTP;
-    long fromAccount,toAccount;
-    double generateOTP;
-    Scanner in =new Scanner(System.in);
-   
 
     void paymentConfimation(){
         do{
@@ -918,7 +936,7 @@ class Ecommerce{
             }
         }while(mainChoice!=5);
 
-        Bill b=new Bill();
+        Payment b=new Payment();
         int totalamount = totalStarterAmount + totalMainCouseAmount+ totalDessertsAmount + totalBeveragesAmount;
         b.payment(totalamount,totalStarterAmount, totalMainCouseAmount, totalDessertsAmount, totalBeveragesAmount);
     }
