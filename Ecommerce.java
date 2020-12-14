@@ -326,17 +326,9 @@ class Beverages {
 	
 }
 
-
-//This class handles all the queries related to bills
-
-class Bill{
-    String validThru,fullName,bankName,cardNo,remark;
-    float vat=0.18f,enteredAmount,payableAmount;
-    int choice,cvv,OTP,enteredOTP;
-    long fromAccount,toAccount;
-    double generateOTP;
-    Scanner in =new Scanner(System.in);
-    void paymentDetails(int totalamount){
+//This class displays the details of the total Bill
+class Bill extends Payment{
+     void paymentDetails(int totalamount){
         System.out.println("\t\t\t\t\t\tThanks For Ordering with us..!");
         System.out.println("Your amount: "+totalamount);
         System.out.println("GST - 18%");
@@ -356,6 +348,37 @@ class Bill{
             System.out.println("Total amount for BEVERAGES : "+beverages);
         
     }
+    void payment(int totalamount,int starters,int mainCourse,int desserts,int beverages){
+        details(starters, mainCourse,desserts, beverages);
+        paymentDetails(totalamount);
+        paymentoptions();
+        choice=in.nextInt();
+        switch(choice){
+            case 1: paymentConfimation();
+                    cashPayment();
+                    break;        
+            case 2: paymentConfimation();
+                    cardPayment();
+                    break;
+            case 3: paymentConfimation();
+                    netBanking();
+                    break;
+            default: System.out.println("Invalid input! Kindly make a proper input.");
+                        payment(totalamount,starters, mainCourse,desserts, beverages);            
+        }
+    }
+}
+
+
+//This class handles all the queries related to payments
+class Payment{
+    String validThru,fullName,bankName,cardNo,remark;
+    float vat=0.18f,enteredAmount,payableAmount;
+    int choice,cvv,OTP,enteredOTP;
+    long fromAccount,toAccount;
+    double generateOTP;
+    Scanner in =new Scanner(System.in);
+   
 
     void paymentConfimation(){
         do{
@@ -417,25 +440,6 @@ class Bill{
         System.out.println("Please Wait......");
         System.out.println("Transaction Successful.");
         System.out.println("Thank You.. Visit Again..");
-    }
-    void payment(int totalamount,int starters,int mainCourse,int desserts,int beverages){
-        details(starters, mainCourse,desserts, beverages);
-        paymentDetails(totalamount);
-        paymentoptions();
-        choice=in.nextInt();
-        switch(choice){
-            case 1: paymentConfimation();
-                    cashPayment();
-                    break;        
-            case 2: paymentConfimation();
-                    cardPayment();
-                    break;
-            case 3: paymentConfimation();
-                    netBanking();
-                    break;
-            default: System.out.println("Invalid input! Kindly make a proper input.");
-                        payment(totalamount,starters, mainCourse,desserts, beverages);            
-        }
     }
 }
 
@@ -888,7 +892,7 @@ class Ecommerce{
         System.out.println("\n\n****************************************** WELCOME TO OUR RESTAURANT ******************************************");
         System.out.println("What would you like to start with ?");
         do{
-            System.out.println("\n1.Starters\n.2.Main Course\n3.Desserts\n4.Beverages\n5.EXIT");
+            System.out.println("\n1.Starters\n2.Main Course\n3.Desserts\n4.Beverages\n5.EXIT");
             mainChoice = venki.nextInt();
             switch(mainChoice)
             {
@@ -914,10 +918,8 @@ class Ecommerce{
             }
         }while(mainChoice!=5);
 
-        Billing b=new Billing();
+        Bill b=new Bill();
         int totalamount = totalStarterAmount + totalMainCouseAmount+ totalDessertsAmount + totalBeveragesAmount;
         b.payment(totalamount,totalStarterAmount, totalMainCouseAmount, totalDessertsAmount, totalBeveragesAmount);
-
-        
     }
 }
